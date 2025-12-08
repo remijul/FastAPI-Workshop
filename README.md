@@ -165,9 +165,9 @@ pip install -r requirements.txt
 
 ### 4. Lancer une étape
 ```bash
-# Exemple : Étape 2
-cd 02-first-api
-uvicorn main:app --reload
+# Exemple : Étape 1
+cd 02-fastapi-essentials
+uvicorn concepts.concepts_01_hello_world:app --reload
 ```
 
 Ouvrir dans le navigateur : http://localhost:8000
@@ -184,14 +184,14 @@ Ouvrir dans le navigateur : http://localhost:8000
 
 ### Structure d'une étape type
 ```
-01-python-foundations/
+01-python-essentials/
 ├── README.md           # Explications et concepts
-├── examples/           # Exemples de code
-│   ├── example1.py
-│   └── example2.py
+├── concepts/           # Exemples de code
+│   ├── concepts_01_functions.py
+│   └── concepts_02_path_parameters.py
 ├── exercises/          # Exercices à faire
-    ├── exercise1.py
-    └── exercise2.py
+    ├── exercise_01.py
+    └── exercise_02.py
 ```
 
 ### Mini-Projet (Étape 10)
@@ -298,7 +298,6 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 ## 🙏 Remerciements
 
 - Merci à l'équipe FastAPI pour ce framework exceptionnel
-- Merci aux étudiants de la promotion AI Application Developer 2024-2025
 - Inspiré par les meilleures pratiques de la communauté Python
 
 ---
