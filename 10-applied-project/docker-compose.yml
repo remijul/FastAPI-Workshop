@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: characters_api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persister la base de données
+      - ./databases:/app/databases
+      # Monter le code en développement (optionnel)
+      # - .:/app
+    environment:
+      - DATABASE_PATH=/app/databases/characters.db
+      - DEBUG=True
+    restart: unless-stopped
+
+  # Service optionnel : Interface web pour visualiser la base SQLite
+  adminer:
+    image: adminer
+    container_name: db_viewer
+    ports:
+      - "8080:8080"
+    environment:
+      - ADMINER_DEFAULT_SERVER=sqlite
+    restart: unless-stopped
+
+# Pour accéder à Adminer:
+# 1. Ouvrir http://localhost:8080
+# 2. Système: SQLite 3
+# 3. Base de données: /app/databases/characters.db (copier le fichier dans le conteneur adminer)

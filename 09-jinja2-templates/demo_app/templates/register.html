@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 500px; margin: 0 auto;">
+    <h1 style="text-align: center; color: #333; margin-bottom: 2rem;">
+        🚀 Créer un compte
+    </h1>
+    
+    {% if error %}
+        <div class="alert alert-error">
+            ❌ {{ error }}
+        </div>
+    {% endif %}
+    
+    <form method="POST" action="/register">
+        <div class="form-group">
+            <label for="username">Nom d'utilisateur :</label>
+            <input 
+                type="text" 
+                id="username" 
+                name="username" 
+                required 
+                minlength="3"
+                placeholder="Minimum 3 caractères"
+            >
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Mot de passe :</label>
+            <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                required 
+                minlength="6"
+                placeholder="Minimum 6 caractères"
+            >
+        </div>
+        
+        <button type="submit" class="btn btn-block">
+            Créer mon compte
+        </button>
+    </form>
+    
+    <p style="text-align: center; margin-top: 1.5rem; color: #666;">
+        Déjà inscrit ? 
+        <a href="/login" style="color: #667eea; text-decoration: none;">
+            Se connecter
+        </a>
+    </p>
+</div>
+{% endblock %}

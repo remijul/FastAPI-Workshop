@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Message envoyé{% endblock %}
+
+{% block extra_style %}
+.success-icon {
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.success-message {
+    text-align: center;
+    color: #27ae60;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+.info {
+    text-align: center;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+.btn {
+    display: block;
+    padding: 1rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+{% endblock %}
+
+{% block content %}
+<div class="success-icon">✅</div>
+<p class="success-message">Message envoyé avec succès !</p>
+<p class="info">Nous avons bien reçu votre message. Nous vous répondrons dans les plus brefs délais.</p>
+<p class="info">Nombre total de messages reçus : {{ total_messages }}</p>
+<a href="/" class="btn">← Retour à l'accueil</a>
+{% endblock %}

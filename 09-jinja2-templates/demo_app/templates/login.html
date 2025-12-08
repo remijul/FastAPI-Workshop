@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 500px; margin: 0 auto;">
+    <h1 style="text-align: center; color: #333; margin-bottom: 2rem;">
+        🔑 Connexion
+    </h1>
+    
+    {% if registered %}
+        <div class="alert alert-success">
+            ✅ Compte créé avec succès ! Vous pouvez maintenant vous connecter.
+        </div>
+    {% endif %}
+    
+    {% if error %}
+        <div class="alert alert-error">
+            ❌ {{ error }}
+        </div>
+    {% endif %}
+    
+    <form method="POST" action="/login">
+        <div class="form-group">
+            <label for="username">Nom d'utilisateur :</label>
+            <input 
+                type="text" 
+                id="username" 
+                name="username" 
+                required
+                autofocus
+            >
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Mot de passe :</label>
+            <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                required
+            >
+        </div>
+        
+        <button type="submit" class="btn btn-block">
+            Se connecter
+        </button>
+    </form>
+    
+    <p style="text-align: center; margin-top: 1.5rem; color: #666;">
+        Pas encore de compte ? 
+        <a href="/register" style="color: #667eea; text-decoration: none;">
+            S'inscrire
+        </a>
+    </p>
+</div>
+{% endblock %}

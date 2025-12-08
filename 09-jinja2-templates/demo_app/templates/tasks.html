@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Mes tâches{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="tasks-header">
+        <h1>📋 Mes tâches</h1>
+        <a href="/tasks/new" class="btn">➕ Nouvelle tâche</a>
+    </div>
+    
+    {% if tasks|length == 0 %}
+        <div class="empty-state">
+            <div class="empty-state-icon">📝</div>
+            <h2 style="color: #666; margin-bottom: 1rem;">Aucune tâche</h2>
+            <p style="color: #999; margin-bottom: 2rem;">
+                Commencez par créer votre première tâche !
+            </p>
+            <a href="/tasks/new" class="btn">➕ Créer une tâche</a>
+        </div>
+    {% else %}
+        <p style="color: #666; margin-bottom: 1.5rem;">
+            Total : {{ tasks|length }} tâche{% if tasks|length > 1 %}s{% endif %}
+        </p>
+        
+        <ul class="task-list">
+            {% for task in tasks %}
+            <li class="task-item {% if task.completed %}completed{% endif %}">
+                <div class="task-content">
+                    <h3>{{ task.title }}</h3>
+                    <p>{{ task.description }}</p>
+                </div>
+                
+                <div class="task-actions">
+                    {% if not task.completed %}
+                    <form method="POST" action="/tasks/{{ task.id }}/toggle" style="display: inline;">
+                        <button type="submit" class="btn btn-sm">
+                            ✓ Terminer
+                        </button>
+                    </form>
+                    {% endif %}
+                    
+                    <form method="POST" action="/tasks/{{ task.id }}/delete" style="display: inline;">
+                        <button type="submit" class="btn btn-sm btn-danger">
+                            🗑️ Supprimer
+                        </button>
+                    </form>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock %}

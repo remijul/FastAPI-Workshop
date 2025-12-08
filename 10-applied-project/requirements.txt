@@ -1,0 +1,37 @@
+# python -m venv venv
+# venv\Scripts\activate
+# pip install -r requirements.txt
+
+# step 01
+pytest
+
+# step 02
+fastapi
+uvicorn
+httpx
+
+# step 03
+pydantic
+
+# step 04
+email-validator
+
+# step 05
+# sqlite3
+
+# step 06
+
+
+# step 07
+
+
+# step 08
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.9
+bcrypt==4.0.1
+
+# step 09
+jinja2
+
+# step 10

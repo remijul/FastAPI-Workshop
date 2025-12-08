@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}{{ character.name }} - Détails{% endblock %}
+
+{% block subtitle %}Fiche détaillée du personnage{% endblock %}
+
+{% block content %}
+<div class="character-detail">
+    <a href="/" class="btn" style="margin-bottom: 2rem;">← Retour à la liste</a>
+    
+    <div class="detail-header">
+        {% if character.image_url %}
+        <img src="{{ character.image_url }}" alt="{{ character.name }}" class="detail-image">
+        {% else %}
+        <div class="detail-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+        {% endif %}
+        
+        <div class="detail-info">
+            <h2>
+                {{ character.name }}
+                <span class="level-badge">Niveau {{ character.level }}</span>
+            </h2>
+            <span class="character-class class-{{ character.class }}" style="font-size: 1rem;">
+                {{ character.class|capitalize }}
+            </span>
+            
+            <div style="margin-top: 1rem; color: #666;">
+                <p>🆔 ID: {{ character.id }}</p>
+                <p>📅 Créé le: {{ character.created_at[:10] }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Statistiques détaillées -->
+    <h3 style="color: #333; margin-bottom: 1rem;">📊 Statistiques</h3>
+    <div class="detail-stats">
+        <div class="detail-stat">
+            <div class="detail-stat-label">❤️ Points de vie</div>
+            <div class="detail-stat-value">{{ character.health_points }}</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ (character.health_points / 500) * 100 }}%;"></div>
+            </div>
+        </div>
+        
+        <div class="detail-stat">
+            <div class="detail-stat-label">⚔️ Attaque</div>
+            <div class="detail-stat-value">{{ character.attack }}</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ character.attack }}%; background: linear-gradient(90deg, #e74c3c 0%, #c0392b 100%);"></div>
+            </div>
+        </div>
+        
+        <div class="detail-stat">
+            <div class="detail-stat-label">🛡️ Défense</div>
+            <div class="detail-stat-value">{{ character.defense }}</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ (character.defense / 50) * 100 }}%; background: linear-gradient(90deg, #3498db 0%, #2980b9 100%);"></div>
+            </div>
+        </div>
+        
+        <div class="detail-stat">
+            <div class="detail-stat-label">⚡ Vitesse</div>
+            <div class="detail-stat-value">{{ character.speed }}</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ character.speed }}%; background: linear-gradient(90deg, #2ecc71 0%, #27ae60 100%);"></div>
+            </div>
+        </div>
+        
+        <div class="detail-stat">
+            <div class="detail-stat-label">🎯 Niveau</div>
+            <div class="detail-stat-value">{{ character.level }}</div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {{ character.level }}%; background: linear-gradient(90deg, #f39c12 0%, #d68910 100%);"></div>
+            </div>
+        </div>
+        
+        <div class="detail-stat">
+            <div class="detail-stat-label">💪 Puissance totale</div>
+            <div class="detail-stat-value">{{ character.attack + character.defense + character.speed }}</div>
+        </div>
+    </div>
+    
+    <!-- Capacité spéciale -->
+    {% if character.special_ability %}
+    <div class="special-ability">
+        <h3>✨ Capacité spéciale</h3>
+        <p>{{ character.special_ability }}</p>
+    </div>
+    {% endif %}
+    
+    <!-- Actions -->
+    <div style="margin-top: 2rem; display: flex; gap: 1rem; justify-content: center;">
+        <a href="/docs#/characters/update_character_characters__character_id__put" 
+           class="btn" target="_blank">
+            ✏️ Modifier via API
+        </a>
+        <a href="/docs#/characters/level_up_character_characters__character_id__level_up_post" 
+           class="btn" target="_blank">
+            📈 Level Up via API
+        </a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Animation des barres de progression au chargement
+document.addEventListener('DOMContentLoaded', function() {
+    const progressBars = document.querySelectorAll('.progress-fill');
+    progressBars.forEach(bar => {
+        const width = bar.style.width;
+        bar.style.width = '0%';
+        setTimeout(() => {
+            bar.style.width = width;
+        }, 100);
+    });
+});
+</script>
+{% endblock %}

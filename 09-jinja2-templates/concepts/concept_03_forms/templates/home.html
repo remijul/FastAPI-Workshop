@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block extra_style %}
+.btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+    transition: transform 0.2s;
+}
+.btn:hover {
+    transform: scale(1.05);
+}
+p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+{% endblock %}
+
+{% block content %}
+<h1>🌟 Bienvenue</h1>
+<p>Cette démonstration montre comment utiliser des formulaires HTML avec FastAPI.</p>
+<p>Les formulaires permettent aux utilisateurs d'envoyer des données au serveur.</p>
+<a href="/contact" class="btn">📧 Nous contacter</a>
+{% endblock %}

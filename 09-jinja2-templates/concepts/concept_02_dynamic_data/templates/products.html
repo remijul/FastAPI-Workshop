@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Produits - Ma Boutique{% endblock %}
+
+{% block extra_style %}
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    transition: transform 0.2s;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.product-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+.product-price {
+    color: #e74c3c;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+.stock-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+.in-stock {
+    background-color: #27ae60;
+    color: white;
+}
+.out-of-stock {
+    background-color: #e74c3c;
+    color: white;
+}
+.stats {
+    background-color: #3498db;
+    color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1.5rem;
+}
+{% endblock %}
+
+{% block content %}
+<h1>Nos Produits</h1>
+
+<div class="stats">
+    <p>📦 Total de produits : {{ total_products }}</p>
+</div>
+
+<!-- Boucle pour afficher tous les produits -->
+<div class="product-grid">
+    {% for product in products %}
+    <div class="product-card">
+        <div class="product-name">{{ product.name }}</div>
+        <div class="product-price">{{ "%.2f"|format(product.price) }} €</div>
+        
+        <!-- Condition : afficher le statut du stock -->
+        {% if product.in_stock %}
+            <span class="stock-badge in-stock">✓ En stock</span>
+        {% else %}
+            <span class="stock-badge out-of-stock">✗ Rupture de stock</span>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Exemple de condition sur la liste -->
+{% if products|length == 0 %}
+    <p>Aucun produit disponible pour le moment.</p>
+{% endif %}
+{% endblock %}

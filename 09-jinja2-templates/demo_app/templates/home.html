@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - Gestionnaire de Tâches{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="hero">
+        <h1>🎯 Gestionnaire de Tâches</h1>
+        <p>Organisez votre vie avec simplicité</p>
+        
+        {% if username %}
+            <p style="color: #27ae60; font-size: 1.1rem; margin-bottom: 2rem;">
+                ✓ Connecté en tant que <strong>{{ username }}</strong>
+            </p>
+            <div class="hero-buttons">
+                <a href="/tasks" class="btn">📋 Voir mes tâches</a>
+                <a href="/tasks/new" class="btn btn-secondary">➕ Nouvelle tâche</a>
+            </div>
+        {% else %}
+            <div class="hero-buttons">
+                <a href="/register" class="btn">🚀 Commencer</a>
+                <a href="/login" class="btn btn-secondary">🔑 Se connecter</a>
+            </div>
+            
+            <div style="margin-top: 3rem; padding: 2rem; background: #f8f9fa; border-radius: 10px;">
+                <h2 style="color: #333; margin-bottom: 1rem;">✨ Fonctionnalités</h2>
+                <ul style="text-align: left; max-width: 500px; margin: 0 auto; color: #666; line-height: 2;">
+                    <li>📝 Créez et gérez vos tâches facilement</li>
+                    <li>✅ Marquez vos tâches comme terminées</li>
+                    <li>🗑️ Supprimez les tâches inutiles</li>
+                    <li>🔒 Données sécurisées avec authentification</li>
+                    <li>📱 Interface simple et intuitive</li>
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
