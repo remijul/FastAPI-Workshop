@@ -67,11 +67,11 @@ logs/
 # 01-python-essentials/SOLUTION.md
 
 # Étape 02 - First API
-02-fastapi-essentials/exercises/solution*.py
-02-fastapi-essentials/exercises/*solution.py
-02-fastapi-essentials/tests/solution*.py
-02-fastapi-essentials/tests/*solution.py
-02-fastapi-essentials/SOLUTION.md
+# 02-fastapi-essentials/exercises/solution*.py
+# 02-fastapi-essentials/exercises/*solution.py
+# 02-fastapi-essentials/tests/solution*.py
+# 02-fastapi-essentials/tests/*solution.py
+# 02-fastapi-essentials/SOLUTION.md
 
 # Étape 03 - Path & Query Params
 03-http-methods/exercises/solution*.py
