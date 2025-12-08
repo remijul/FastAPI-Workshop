@@ -74,11 +74,11 @@ logs/
 # 02-fastapi-essentials/SOLUTION.md
 
 # Étape 03 - Path & Query Params
-03-http-methods/exercises/solution*.py
-03-http-methods/exercises/*solution.py
-03-http-methods/tests/solution*.py
-03-http-methods/tests/*solution.py
-03-http-methods/SOLUTION.md
+# 03-http-methods/exercises/solution*.py
+# 03-http-methods/exercises/*solution.py
+# 03-http-methods/tests/solution*.py
+# 03-http-methods/tests/*solution.py
+# 03-http-methods/SOLUTION.md
 
 # Étape 04 - Pydantic Validation
 04-models-and-validation/exercises/solution*.py
