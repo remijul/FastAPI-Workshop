@@ -60,11 +60,11 @@ logs/
 # Décommentez les lignes ci-dessous au fur et à mesure de la publication des solutions
 
 # Étape 01 - Python Foundations
-01-python-essentials/exercises/solution*.py
-01-python-essentials/exercises/*solution.py
-01-python-essentials/tests/solution*.py
-01-python-essentials/tests/*solution.py
-01-python-essentials/SOLUTION.md
+# 01-python-essentials/exercises/solution*.py
+# 01-python-essentials/exercises/*solution.py
+# 01-python-essentials/tests/solution*.py
+# 01-python-essentials/tests/*solution.py
+# 01-python-essentials/SOLUTION.md
 
 # Étape 02 - First API
 02-fastapi-essentials/exercises/solution*.py
