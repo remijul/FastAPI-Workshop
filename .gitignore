@@ -81,11 +81,11 @@ logs/
 # 03-http-methods/SOLUTION.md
 
 # Étape 04 - Pydantic Validation
-04-models-and-validation/exercises/solution*.py
-04-models-and-validation/exercises/*solution.py
-04-models-and-validation/tests/solution*.py
-04-models-and-validation/tests/*solution.py
-04-models-and-validation/SOLUTION.md
+# 04-models-and-validation/exercises/solution*.py
+# 04-models-and-validation/exercises/*solution.py
+# 04-models-and-validation/tests/solution*.py
+# 04-models-and-validation/tests/*solution.py
+# 04-models-and-validation/SOLUTION.md
 
 # Étape 05 - SQLite Database
 05-data-storage/exercises/solution*.py
