@@ -105,10 +105,10 @@ logs/
 
 # Étape 07 - Error Handling
 # 07-error-handling/exercises/exercise_01_solution/
-07-error-handling/exercises/exercise_02_solution/
-07-error-handling/tests/solution*.py
-07-error-handling/tests/*solution.py
-07-error-handling/SOLUTION.md
+# 07-error-handling/exercises/exercise_02_solution/
+# 07-error-handling/tests/solution*.py
+# 07-error-handling/tests/*solution.py
+# 07-error-handling/SOLUTION.md
 
 # Étape 08 - JWT Authentication
 08-authentication/exercises/exercise_01_solution/
