@@ -98,10 +98,10 @@ logs/
 
 # Étape 06 - Layered Architecture
 # 06-layered-architecture/exercises/exercise_01_solution/
-06-layered-architecture/exercises/exercise_02_solution/
+# 06-layered-architecture/exercises/exercise_02_solution/
 # 06-layered-architecture/tests/solution*.py
 # 06-layered-architecture/tests/*solution.py
-06-layered-architecture/SOLUTION.md
+# 06-layered-architecture/SOLUTION.md
 
 # Étape 07 - Error Handling
 07-error-handling/exercises/exercise_01_solution/

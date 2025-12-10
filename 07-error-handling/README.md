@@ -319,5 +319,3 @@ logger.error(f"Unexpected error: {exc}", exc_info=True)
 - Circuit breaker pattern
 - Alertes sur erreurs critiques
 - Monitoring avec Sentry
-
-**Workshop terminé !** Vous maîtrisez maintenant FastAPI de bout en bout. 🎉
