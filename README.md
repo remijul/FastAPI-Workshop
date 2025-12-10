@@ -34,16 +34,16 @@ Ce workshop est conçu pour les **développeurs débutants à intermédiaires** 
 
 | Étape | Titre | Concepts clés |
 |-------|-------|---------------|
-| **01** | [Fondations Python](01-python-foundations/) | Types, fonctions, classes, dictionnaires |
-| **02** | [Première API FastAPI](02-first-api/) | Routes, méthodes HTTP, Swagger, query params |
-| **03** | [Path & Query Parameters](03-path-query-params/) | Path params, validation, valeurs par défaut |
-| **04** | [Validation avec Pydantic](04-pydantic-validation/) | Modèles, contraintes, aliases, validateurs |
+| **01** | [Fondations Python](01-python-essentials/) | Types, fonctions, classes, dictionnaires |
+| **02** | [Première API FastAPI](02-fastapi-essentials/) | Routes, méthodes HTTP, Swagger, query params |
+| **03** | [Path & Query Parameters](03-http-methods/) | Path params, validation, valeurs par défaut |
+| **04** | [Validation avec Pydantic](04-models-and-validation/) | Modèles, contraintes, aliases, validateurs |
 
 ### 🔨 Étapes Intermédiaires (5-7)
 
 | Étape | Titre | Concepts clés |
 |-------|-------|---------------|
-| **05** | [Base de données SQLite](05-sqlite-database/) | SQLite, CRUD, connexions, transactions |
+| **05** | [Base de données SQLite](05-data-storage/) | SQLite, CRUD, connexions, transactions |
 | **06** | [Architecture en couches](06-layered-architecture/) | Models, Repositories, Services, Routes |
 | **07** | [Gestion des erreurs](07-error-handling/) | Exceptions custom, status codes, handlers |
 
@@ -51,7 +51,7 @@ Ce workshop est conçu pour les **développeurs débutants à intermédiaires** 
 
 | Étape | Titre | Concepts clés |
 |-------|-------|---------------|
-| **08** | [Authentification JWT](08-jwt-authentication/) | Tokens, hachage, sécurité, dependencies |
+| **08** | [Authentification JWT](08-authentication/) | Tokens, hachage, sécurité, dependencies |
 | **09** | [Templates Jinja2](09-jinja2-templates/) | HTML, CSS, templating, interfaces web |
 
 ### 🎓 Projet Final (10)

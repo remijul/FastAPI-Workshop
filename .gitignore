@@ -111,8 +111,8 @@ logs/
 07-error-handling/SOLUTION.md
 
 # Étape 08 - JWT Authentication
-08-jwt-authentication/exercises/exercise_01_solution/
-08-jwt-authentication/exercises/exercise_02_solution/
+08-authentication/exercises/exercise_01_solution/
+08-authentication/exercises/exercise_02_solution/
 08-authentication/tests/solution*.py
 08-authentication/tests/*solution.py
 08-authentication/SOLUTION.md
