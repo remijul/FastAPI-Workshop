@@ -95,22 +95,22 @@ logs/
 # 05-data-storage/SOLUTION.md
 
 # Étape 06 - Layered Architecture
-06-layered-architecture/exercises/solution*.py
-06-layered-architecture/exercises/*solution.py
+06-layered-architecture/exercises/exercise_01_solution/
+06-layered-architecture/exercises/exercise_02_solution/
 06-layered-architecture/tests/solution*.py
 06-layered-architecture/tests/*solution.py
 06-layered-architecture/SOLUTION.md
 
 # Étape 07 - Error Handling
-07-error-handling/exercises/solution*.py
-07-error-handling/exercises/*solution.py
+07-error-handling/exercises/exercise_01_solution/
+07-error-handling/exercises/exercise_02_solution/
 07-error-handling/tests/solution*.py
 07-error-handling/tests/*solution.py
 07-error-handling/SOLUTION.md
 
 # Étape 08 - JWT Authentication
-08-authentication/exercises/solution*.py
-08-authentication/exercises/*solution.py
+08-jwt-authentication/exercises/exercise_01_solution/
+08-jwt-authentication/exercises/exercise_02_solution/
 08-authentication/tests/solution*.py
 08-authentication/tests/*solution.py
 08-authentication/SOLUTION.md
