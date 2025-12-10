@@ -17,7 +17,7 @@ from .services import ProductService
 router = APIRouter(prefix="/products", tags=["products"])
 
 
-@router.post("", response_model=ProductResponse, status_code=201)
+@router.post("", response_model=ProductResponse, status_code=201)#, tags=["admin"])
 def create_product(product: ProductCreate):
     """
     Crée un nouveau produit.

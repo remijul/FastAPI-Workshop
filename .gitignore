@@ -88,11 +88,11 @@ logs/
 # 04-models-and-validation/SOLUTION.md
 
 # Étape 05 - SQLite Database
-05-data-storage/exercises/solution*.py
-05-data-storage/exercises/*solution.py
-05-data-storage/tests/solution*.py
-05-data-storage/tests/*solution.py
-05-data-storage/SOLUTION.md
+# 05-data-storage/exercises/solution*.py
+# 05-data-storage/exercises/*solution.py
+# 05-data-storage/tests/solution*.py
+# 05-data-storage/tests/*solution.py
+# 05-data-storage/SOLUTION.md
 
 # Étape 06 - Layered Architecture
 06-layered-architecture/exercises/solution*.py
