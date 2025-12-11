@@ -1,5 +1,5 @@
 # Architecture API avec Authentification JWT
-## Module 08 - Exercise 02 Solution
+## Module 08 - Exercise 02
 
 ---
 

@@ -1,5 +1,5 @@
 # Architecture API Blog avec Authentification JWT
-## Module 08 - Exercise 01 Solution
+## Module 08 - Exercise 01
 
 ---
 
