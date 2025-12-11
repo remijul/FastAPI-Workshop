@@ -112,10 +112,10 @@ logs/
 
 # Étape 08 - JWT Authentication
 # 08-authentication/exercises/exercise_01_solution/
-08-authentication/exercises/exercise_02_solution/
-08-authentication/tests/solution*.py
-08-authentication/tests/*solution.py
-08-authentication/SOLUTION.md
+# 08-authentication/exercises/exercise_02_solution/
+# 08-authentication/tests/solution*.py
+# 08-authentication/tests/*solution.py
+# 08-authentication/SOLUTION.md
 
 # Étape 09 - Jinja2 Templates
 09-jinja2-templates/exercises/solution*.py

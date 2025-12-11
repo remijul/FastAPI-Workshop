@@ -41,7 +41,7 @@ def submit_contact(
     name: str = Form(...),
     email: str = Form(...),
     message: str = Form(...)
-):
+    ):
     """
     Traite le formulaire de contact.
     
