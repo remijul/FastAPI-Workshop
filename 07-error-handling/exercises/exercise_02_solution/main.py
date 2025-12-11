@@ -10,14 +10,14 @@ from .database import init_database
 from .routes import router
 from .exceptions import RoomNotFoundError, RoomNotAvailableError, InvalidDateError
 
-# Configurer le logging - TERMINAL uniquement -----------------------
+# 1 - Configurer le logging - TERMINAL uniquement -----------------------
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
-# Configurer le logging - FICHIER uniquement -----------------------
+# # 2 - Configurer le logging - FICHIER uniquement -----------------------
 # logging.basicConfig(
 #     level=logging.INFO,
 #     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 # )
 # logger = logging.getLogger(__name__)
 
-# Configurer le logging - TERMINAL & FICHIER -----------------------
+# # 3 - Configurer le logging - TERMINAL & FICHIER -----------------------
 # # Créer le logger
 # logger = logging.getLogger(__name__)
 # logger.setLevel(logging.INFO)
