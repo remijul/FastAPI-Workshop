@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Aragorn",
+    "class": "warrior",
+    "level": 50,
+    "health_points": 350,
+    "attack": 85,
+    "defense": 40,
+    "speed": 60,
+    "special_ability": "Ranger's Strike",
+    "image_url": "https://tolkiengateway.net/w/images/f/f2/Aragorn%27s_Quest_-_Aragorn4.jpg"
+  },
+  {
+    "name": "Gandalf",
+    "class": "mage",
+    "level": 80,
+    "health_points": 250,
+    "attack": 95,
+    "defense": 25,
+    "speed": 50,
+    "special_ability": "Lightning Bolt",
+    "image_url": "https://tolkiengateway.net/w/images/f/f3/Aragorn%27s_Quest_-_Gandalf_the_Grey.jpg"
+  },
+  {
+    "name": "Legolas",
+    "class": "archer",
+    "level": 60,
+    "health_points": 280,
+    "attack": 90,
+    "defense": 30,
+    "speed": 95,
+    "special_ability": "Multi-Shot",
+    "image_url": "https://tolkiengateway.net/w/images/f/f7/Aragorn%27s_Quest_-_Legolas.jpg"
+  },
+  {
+    "name": "Gimli",
+    "class": "tank",
+    "level": 55,
+    "health_points": 450,
+    "attack": 70,
+    "defense": 48,
+    "speed": 35,
+    "special_ability": "Shield Wall",
+    "image_url": "https://tolkiengateway.net/w/images/4/43/Aragorn%27s_Quest_-_Gimli.jpg"
+  },
+  {
+    "name": "Elrond",
+    "class": "healer",
+    "level": 70,
+    "health_points": 300,
+    "attack": 45,
+    "defense": 35,
+    "speed": 55,
+    "special_ability": "Healing Light",
+    "image_url": "https://tolkiengateway.net/w/images/e/e7/Soni_Alcorn-Hender_-_Elrond.jpg"
+  },
+  {
+    "name": "Boromir",
+    "class": "warrior",
+    "level": 45,
+    "health_points": 320,
+    "attack": 80,
+    "defense": 38,
+    "speed": 55,
+    "special_ability": "War Cry",
+    "image_url": "https://tolkiengateway.net/w/images/2/26/Ana_Kusicka_-_Son_of_Gondor.jpg"
+  },
+  {
+    "name": "Saruman",
+    "class": "mage",
+    "level": 75,
+    "health_points": 240,
+    "attack": 92,
+    "defense": 22,
+    "speed": 48,
+    "special_ability": "Fire Storm",
+    "image_url": "https://tolkiengateway.net/w/images/7/74/Guardians_of_Middle-earth_-_Saruman.png"
+  },
+  {
+    "name": "Faramir",
+    "class": "archer",
+    "level": 40,
+    "health_points": 260,
+    "attack": 75,
+    "defense": 28,
+    "speed": 85,
+    "special_ability": "Precision Shot",
+    "image_url": "https://tolkiengateway.net/w/images/d/d2/Soni_Alcorn-Hender_-_Faramir.jpg"
+  },
+  {
+    "name": "Théoden",
+    "class": "tank",
+    "level": 50,
+    "health_points": 400,
+    "attack": 68,
+    "defense": 45,
+    "speed": 40,
+    "special_ability": "King's Command",
+    "image_url": "https://tolkiengateway.net/w/images/e/e2/The_Lord_of_the_Rings_-_The_Two_Towers_-_Th%C3%A9oden.jpeg"
+  },
+  {
+    "name": "Galadriel",
+    "class": "healer",
+    "level": 85,
+    "health_points": 280,
+    "attack": 50,
+    "defense": 32,
+    "speed": 60,
+    "special_ability": "Starlight Heal",
+    "image_url": "https://tolkiengateway.net/w/images/1/1d/The_Hobbit_-_An_Unexpected_Journey_-_Galadriel_poster.jpg"
+  }
+]

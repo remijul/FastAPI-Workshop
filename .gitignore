@@ -118,16 +118,16 @@ logs/
 # 08-authentication/SOLUTION.md
 
 # Étape 09 - Jinja2 Templates
-09-jinja2-templates/exercises/solution*.py
-09-jinja2-templates/exercises/*solution.py
-09-jinja2-templates/tests/solution*.py
-09-jinja2-templates/tests/*solution.py
-09-jinja2-templates/SOLUTION.md
+# 09-jinja2-templates/exercises/solution*.py
+# 09-jinja2-templates/exercises/*solution.py
+# 09-jinja2-templates/tests/solution*.py
+# 09-jinja2-templates/tests/*solution.py
+# 09-jinja2-templates/SOLUTION.md
 
 # Étape 10 - Mini-Projet (SOLUTION COMPLÈTE À NE PAS PUBLIER INITIALEMENT)
-10-applied-project-solution/
-10-applied-project/CORRECTION.md
-10-applied-project/README_SOLUTION.md
+# 10-applied-project-solution/
+# 10-applied-project/CORRECTION.md
+# 10-applied-project/README_SOLUTION.md
 
 # ==================== DOCUMENTS FORMATEUR ====================
 # Documents pédagogiques à ne pas publier

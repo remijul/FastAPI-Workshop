@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gestionnaire de Personnages{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎮 Gestionnaire de Personnages</h1>
+            <p>{% block subtitle %}Gérez vos personnages de jeu vidéo{% endblock %}</p>
+            
+            <!-- Navigation 
+            <div class="nav">
+                <a href="/">🏠 Accueil</a>
+                <a href="/docs" target="_blank">📖 API Documentation</a>
+                <a href="/characters/stats">📊 Statistiques</a>
+            </div> -->
+            <!-- Navigation  -->
+            <div class="nav">
+                <a href="/characters/web/home">🏠 Accueil</a>
+                <a href="/characters/web/battle">⚔️ Arène</a>
+                <a href="/docs" target="_blank">📖 API Documentation</a>
+                <a href="/characters/stats/global">📊 Statistiques</a>
+            </div>
+            <!--
+            <nav>
+                <a href="/characters/web/home">🏠 Accueil</a>
+                <a href="/characters/web/battle">⚔️ Arène</a>
+                <a href="/docs" target="_blank">📖 API Documentation</a>
+                <a href="/characters/stats/global">📊 Statistiques</a>
+            </nav>-->
+        </div>
+
+        <!-- Contenu principal -->
+        {% block content %}{% endblock %}
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>API de gestion de personnages de jeu vidéo - Mini-Projet FastAPI Workshop</p>
+        </div>
+    </div>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

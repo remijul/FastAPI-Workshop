@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - Personnages{% endblock %}
+
+{% block content %}
+<!-- Filtres -->
+<div class="filters">
+    <h2>🔍 Filtrer les personnages</h2>
+    <form action="/" method="get">
+        <div class="filter-group">
+            <div class="filter-item">
+                <label for="class">Classe :</label>
+                <select name="class" id="class">
+                    <option value="">Toutes les classes</option>
+                    {% for c in classes %}
+                    <option value="{{ c }}" {% if selected_class == c %}selected{% endif %}>
+                        {{ c|capitalize }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="filter-item">
+                <label for="min_level">Niveau min :</label>
+                <input type="number" name="min_level" id="min_level" 
+                       min="1" max="100" placeholder="1" 
+                       value="{{ min_level if min_level else '' }}">
+            </div>
+            
+            <div class="filter-item">
+                <label for="max_level">Niveau max :</label>
+                <input type="number" name="max_level" id="max_level" 
+                       min="1" max="100" placeholder="100" 
+                       value="{{ max_level if max_level else '' }}">
+            </div>
+            
+            <div class="filter-item">
+                <button type="submit" class="btn">Filtrer</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Statistiques rapides -->
+<div class="stats-container">
+    <h2>📊 Statistiques rapides</h2>
+    <div class="stats-grid">
+        <div class="stat-box">
+            <div class="stat-box-value">{{ characters|length }}</div>
+            <div class="stat-box-label">Personnages affichés</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-box-value">{{ classes|length }}</div>
+            <div class="stat-box-label">Classes disponibles</div>
+        </div>
+    </div>
+</div>
+
+<!-- Grille de personnages -->
+{% if characters|length > 0 %}
+<div class="characters-grid">
+    {% for character in characters %}
+    <div class="character-card" onclick="window.location.href='/characters/{{ character.id }}/details'">
+        {% if character.image_url %}
+        <img src="{{ character.image_url }}" alt="{{ character.name }}" class="character-image">
+        {% else %}
+        <div class="character-image"></div>
+        {% endif %}
+        
+        <div class="character-content">
+            <div class="character-name">{{ character.name }}</div>
+            <span class="character-class class-{{ character.class }}">
+                {{ character.class|capitalize }}
+            </span>
+            <div class="character-level">Niveau {{ character.level }}</div>
+            
+            <div class="character-stats">
+                <div class="stat">
+                    <span class="stat-label">❤️ HP</span>
+                    <span class="stat-value">{{ character.health_points }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">⚔️ Attaque</span>
+                    <span class="stat-value">{{ character.attack }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">🛡️ Défense</span>
+                    <span class="stat-value">{{ character.defense }}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">⚡ Vitesse</span>
+                    <span class="stat-value">{{ character.speed }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <div class="empty-state-icon">🔍</div>
+    <h2>Aucun personnage trouvé</h2>
+    <p>Essayez de modifier vos filtres ou de créer un nouveau personnage via l'API.</p>
+    <a href="/docs" class="btn">📖 Voir la documentation API</a>
+</div>
+{% endif %}
+{% endblock %}

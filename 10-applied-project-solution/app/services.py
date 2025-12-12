@@ -1,0 +1,330 @@
+"""
+Services contenant la logique métier.
+SOLUTION COMPLÈTE
+"""
+
+from app.repositories import CharacterRepository
+from app.models import CharacterCreate, CharacterUpdate, CharacterResponse
+from app.exceptions import CharacterNotFoundError, MaxLevelReachedError
+from typing import Optional
+from datetime import datetime
+
+
+class CharacterService:
+    """Service pour la logique métier des personnages."""
+    
+    @staticmethod
+    def create_character(character_data: CharacterCreate) -> CharacterResponse:
+        """Crée un nouveau personnage."""
+        character_id = CharacterRepository.create(
+            name=character_data.name,
+            character_class=character_data.character_class,
+            level=character_data.level,
+            health_points=character_data.health_points,
+            attack=character_data.attack,
+            defense=character_data.defense,
+            speed=character_data.speed,
+            special_ability=character_data.special_ability,
+            image_url=character_data.image_url
+        )
+        
+        # Récupérer le personnage créé
+        created_character = CharacterRepository.get_by_id(character_id)
+        """
+        return CharacterResponse(
+            id=created_character["id"],
+            name=created_character["name"],
+            character_class=created_character["class"],
+            level=created_character["level"],
+            health_points=created_character["health_points"],
+            attack=created_character["attack"],
+            defense=created_character["defense"],
+            speed=created_character["speed"],
+            special_ability=created_character["special_ability"],
+            image_url=created_character["image_url"],
+            created_at=created_character["created_at"]
+        )
+        """
+        return CharacterResponse.model_validate(created_character)
+    
+    @staticmethod
+    def get_character(character_id: int) -> CharacterResponse:
+        """Récupère un personnage par ID."""
+        character = CharacterRepository.get_by_id(character_id)
+        
+        if not character:
+            raise CharacterNotFoundError(character_id)
+        """
+        return CharacterResponse(
+            id=character["id"],
+            name=character["name"],
+            **{"class": character["class"]}, #character_class=character["class"],
+            level=character["level"],
+            health_points=character["health_points"],
+            attack=character["attack"],
+            defense=character["defense"],
+            speed=character["speed"],
+            special_ability=character["special_ability"],
+            image_url=character["image_url"],
+            created_at=character["created_at"]
+        )
+        """
+        return CharacterResponse.model_validate(character)
+    
+    @staticmethod
+    def get_all_characters() -> list[CharacterResponse]:
+        """Récupère tous les personnages."""
+        characters = CharacterRepository.get_all()
+        """
+        return [
+            CharacterResponse(
+                id=char["id"],
+                name=char["name"],
+                **{"class": character["class"]},  #character_class=char["class"],
+                level=char["level"],
+                health_points=char["health_points"],
+                attack=char["attack"],
+                defense=char["defense"],
+                speed=char["speed"],
+                special_ability=char["special_ability"],
+                image_url=char["image_url"],
+                created_at=char["created_at"]
+            )
+            for char in characters
+        ]
+        """
+        return [CharacterResponse.model_validate(char) for char in characters]
+    
+    @staticmethod
+    def update_character(character_id: int, 
+                        character_data: CharacterUpdate) -> CharacterResponse:
+        """Met à jour un personnage."""
+        # Vérifier que le personnage existe
+        existing = CharacterRepository.get_by_id(character_id)
+        if not existing:
+            raise CharacterNotFoundError(character_id)
+        
+        # Extraire seulement les champs fournis
+        updates = character_data.model_dump(exclude_unset=True, by_alias=True)
+        
+        if updates:
+            # Convertir l'alias "class" en "class" pour la DB
+            if "class" in updates:
+                updates["class"] = updates["class"]
+            
+            CharacterRepository.update(character_id, **updates)
+        
+        # Retourner le personnage mis à jour
+        return CharacterService.get_character(character_id)
+    
+    @staticmethod
+    def delete_character(character_id: int) -> None:
+        """Supprime un personnage."""
+        # Vérifier que le personnage existe
+        existing = CharacterRepository.get_by_id(character_id)
+        if not existing:
+            raise CharacterNotFoundError(character_id)
+        
+        CharacterRepository.delete(character_id)
+    
+    # ==================== NIVEAU 2 ====================
+    
+    @staticmethod
+    def get_characters_filtered(character_class: Optional[str] = None,
+                               min_level: Optional[int] = None,
+                               max_level: Optional[int] = None) -> list[CharacterResponse]:
+        """Récupère les personnages avec filtres."""
+        characters = CharacterRepository.get_by_filters(
+            character_class=character_class,
+            min_level=min_level,
+            max_level=max_level
+        )
+        """
+        return [
+            CharacterResponse(
+                id=char["id"],
+                name=char["name"],
+                **{"class": character["class"]},  #character_class=char["class"],
+                level=char["level"],
+                health_points=char["health_points"],
+                attack=char["attack"],
+                defense=char["defense"],
+                speed=char["speed"],
+                special_ability=char["special_ability"],
+                image_url=char["image_url"],
+                created_at=char["created_at"]
+            )
+            for char in characters
+        ]
+        """
+        return [CharacterResponse.model_validate(char) for char in characters]
+    
+    @staticmethod
+    def get_statistics() -> dict:
+        """Récupère les statistiques globales."""
+        return CharacterRepository.get_stats()
+    
+    @staticmethod
+    def level_up(character_id: int) -> CharacterResponse:
+        """Augmente le niveau d'un personnage de 1."""
+        # Récupérer le personnage
+        character = CharacterRepository.get_by_id(character_id)
+        
+        if not character:
+            raise CharacterNotFoundError(character_id)
+        
+        # Vérifier qu'il n'est pas déjà niveau 100
+        if character["level"] >= 100:
+            raise MaxLevelReachedError(character_id)
+        
+        # Augmenter les stats
+        updates = {
+            "level": character["level"] + 1,
+            "health_points": character["health_points"] + 10,
+            "attack": character["attack"] + 2,
+            "defense": character["defense"] + 1
+        }
+        
+        CharacterRepository.update(character_id, **updates)
+        
+        # Retourner le personnage mis à jour
+        return CharacterService.get_character(character_id)
+
+
+# ==================== NIVEAU 3 - OPTION COMBAT ====================
+
+class BattleService:
+    """Service pour gérer les combats entre personnages."""
+    
+    @staticmethod
+    def simulate_battle(character1_id: int, character2_id: int) -> dict:
+        """Simule un combat entre deux personnages."""
+        # Récupérer les personnages
+        char1_data = CharacterRepository.get_by_id(character1_id)
+        char2_data = CharacterRepository.get_by_id(character2_id)
+        
+        if not char1_data:
+            raise CharacterNotFoundError(character1_id)
+        if not char2_data:
+            raise CharacterNotFoundError(character2_id)
+        
+        # Créer des copies des HP pour le combat
+        char1_hp = char1_data["health_points"]
+        char2_hp = char2_data["health_points"]
+        
+        battle_log = []
+        turns = 0
+        
+        # Déterminer qui attaque en premier (plus rapide)
+        if char1_data["speed"] >= char2_data["speed"]:
+            attacker = (char1_data, "char1_hp")
+            defender = (char2_data, "char2_hp")
+            attacker_hp_var = "char1_hp"
+            defender_hp_var = "char2_hp"
+        else:
+            attacker = (char2_data, "char2_hp")
+            defender = (char1_data, "char1_hp")
+            attacker_hp_var = "char2_hp"
+            defender_hp_var = "char1_hp"
+        
+        battle_log.append(f"⚔️ Combat entre {char1_data['name']} et {char2_data['name']}")
+        battle_log.append(f"🏃 {attacker[0]['name']} attaque en premier (vitesse: {attacker[0]['speed']})")
+        
+        # Boucle de combat
+        while char1_hp > 0 and char2_hp > 0:
+            turns += 1
+            
+            # Attaquant actuel
+            if attacker[0]["id"] == char1_data["id"]:
+                current_attacker = char1_data
+                current_defender = char2_data
+                attacker_hp = char1_hp
+                defender_hp = char2_hp
+            else:
+                current_attacker = char2_data
+                current_defender = char1_data
+                attacker_hp = char2_hp
+                defender_hp = char1_hp
+            
+            # Calcul des dégâts
+            damage = max(1, current_attacker["attack"] - current_defender["defense"])
+            
+            # Appliquer les dégâts
+            if current_defender["id"] == char1_data["id"]:
+                char1_hp -= damage
+                battle_log.append(
+                    f"Tour {turns}: {current_attacker['name']} inflige {damage} dégâts à {current_defender['name']} "
+                    f"(HP restants: {max(0, char1_hp)})"
+                )
+            else:
+                char2_hp -= damage
+                battle_log.append(
+                    f"Tour {turns}: {current_attacker['name']} inflige {damage} dégâts à {current_defender['name']} "
+                    f"(HP restants: {max(0, char2_hp)})"
+                )
+            
+            # Vérifier si le combat est terminé
+            if char1_hp <= 0 or char2_hp <= 0:
+                break
+            
+            # Inverser attaquant et défenseur
+            attacker, defender = defender, attacker
+        
+        # Déterminer le gagnant
+        if char1_hp > 0:
+            winner = char1_data
+            winner_hp = char1_hp
+            loser = char2_data
+        else:
+            winner = char2_data
+            winner_hp = char2_hp
+            loser = char1_data
+        
+        battle_log.append(f"🏆 {winner['name']} remporte le combat avec {winner_hp} HP restants!")
+        
+        return {
+            "winner_id": winner["id"],
+            "winner_name": winner["name"],
+            "loser_id": loser["id"],
+            "loser_name": loser["name"],
+            "turns": turns,
+            "winner_remaining_hp": winner_hp,
+            "battle_log": battle_log
+        }
+
+
+# ==================== NIVEAU 3 - OPTION AUTH ====================
+
+from app.repositories import UserRepository
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+class AuthService:
+    """Service pour l'authentification."""
+    
+    @staticmethod
+    def register(username: str, password: str) -> bool:
+        """Enregistre un utilisateur."""
+        # Vérifier si l'utilisateur existe déjà
+        existing = UserRepository.get_by_username(username)
+        if existing:
+            return False
+        
+        # Hacher le mot de passe
+        hashed_password = pwd_context.hash(password)
+        
+        # Créer l'utilisateur
+        UserRepository.create(username, hashed_password)
+        return True
+    
+    @staticmethod
+    def authenticate(username: str, password: str) -> bool:
+        """Authentifie un utilisateur."""
+        user = UserRepository.get_by_username(username)
+        
+        if not user:
+            return False
+        
+        return pwd_context.verify(password, user["hashed_password"])

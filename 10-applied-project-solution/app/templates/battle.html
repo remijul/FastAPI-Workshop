@@ -1,0 +1,468 @@
+{% extends "base.html" %}
+
+{% block title %}Arène de Combat - {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="battle-arena">
+    <!-- Header de l'arène -->
+    <div class="arena-header">
+        <h1 class="arena-title">
+            <span class="title-icon">⚔️</span>
+            ARÈNE DE COMBAT
+            <span class="title-icon">⚔️</span>
+        </h1>
+        <p class="arena-subtitle">Préparez-vous pour un affrontement légendaire</p>
+    </div>
+
+    <!-- Zone de sélection des combattants -->
+    <div class="fighters-container" id="selection-phase">
+        <!-- Combattant 1 (Gauche) -->
+        <div class="fighter-zone fighter-left">
+            <div class="fighter-corner corner-red">
+                <div class="corner-label">COMBATTANT</div>
+                <div class="corner-number">1</div>
+            </div>
+            
+            <div class="fighter-selector">
+                <select id="fighter1" class="select-fighter">
+                    <option value="">⚡ Choisir un guerrier</option>
+                    {% for character in characters %}
+                    <option value="{{ character.id }}" 
+                            data-name="{{ character.name }}"
+                            data-class="{{ character.class }}"
+                            data-level="{{ character.level }}"
+                            data-hp="{{ character.health_points }}"
+                            data-attack="{{ character.attack }}"
+                            data-defense="{{ character.defense }}"
+                            data-speed="{{ character.speed }}"
+                            data-image="{{ character.image_url or '' }}">
+                        {{ character.name }} • Niv.{{ character.level }} • {{ character.class|title }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div id="fighter1-card" class="fighter-card"></div>
+        </div>
+
+        <!-- VS Central -->
+        <div class="vs-container">
+            <div class="vs-circle">
+                <div class="vs-text">VS</div>
+                <div class="vs-glow"></div>
+            </div>
+            <button id="start-battle" class="btn-fight" disabled>
+                <span class="btn-icon">⚔️</span>
+                <span class="btn-text">COMMENCER LE COMBAT</span>
+                <span class="btn-glow"></span>
+            </button>
+        </div>
+
+        <!-- Combattant 2 (Droite) -->
+        <div class="fighter-zone fighter-right">
+            <div class="fighter-corner corner-blue">
+                <div class="corner-label">COMBATTANT</div>
+                <div class="corner-number">2</div>
+            </div>
+            
+            <div class="fighter-selector">
+                <select id="fighter2" class="select-fighter">
+                    <option value="">⚡ Choisir un guerrier</option>
+                    {% for character in characters %}
+                    <option value="{{ character.id }}"
+                            data-name="{{ character.name }}"
+                            data-class="{{ character.class }}"
+                            data-level="{{ character.level }}"
+                            data-hp="{{ character.health_points }}"
+                            data-attack="{{ character.attack }}"
+                            data-defense="{{ character.defense }}"
+                            data-speed="{{ character.speed }}"
+                            data-image="{{ character.image_url or '' }}">
+                        {{ character.name }} • Niv.{{ character.level }} • {{ character.class|title }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div id="fighter2-card" class="fighter-card"></div>
+        </div>
+    </div>
+
+    <!-- Zone de combat (cachée au départ) -->
+    <div id="battle-phase" class="battle-phase" style="display: none;">
+        <!-- Barres de vie animées -->
+        <div class="health-bars">
+            <div class="health-bar-container fighter-1-hp">
+                <div class="fighter-name-hp" id="fighter1-name-battle"></div>
+                <div class="hp-bar-wrapper">
+                    <div class="hp-bar" id="fighter1-hp-bar">
+                        <div class="hp-fill" id="fighter1-hp-fill"></div>
+                        <div class="hp-text" id="fighter1-hp-text">100%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="battle-round">
+                <div class="round-number">ROUND <span id="current-round">1</span></div>
+            </div>
+
+            <div class="health-bar-container fighter-2-hp">
+                <div class="fighter-name-hp" id="fighter2-name-battle"></div>
+                <div class="hp-bar-wrapper">
+                    <div class="hp-bar" id="fighter2-hp-bar">
+                        <div class="hp-fill" id="fighter2-hp-fill"></div>
+                        <div class="hp-text" id="fighter2-hp-text">100%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Combat visuel -->
+        <div class="combat-arena">
+            <div class="arena-ground"></div>
+            <div class="fighter-sprite" id="sprite1">
+                <div class="sprite-image"></div>
+                <div class="damage-indicator" id="damage1"></div>
+            </div>
+            <div class="fighter-sprite" id="sprite2">
+                <div class="sprite-image"></div>
+                <div class="damage-indicator" id="damage2"></div>
+            </div>
+            <div class="impact-effect" id="impact"></div>
+        </div>
+
+        <!-- Log de combat stylisé -->
+        <div class="combat-log-container">
+            <div class="log-header">
+                <span class="log-icon">⚡</span>
+                DÉROULEMENT DU COMBAT
+            </div>
+            <div id="combat-log" class="combat-log"></div>
+        </div>
+    </div>
+
+    <!-- Résultat du combat -->
+    <div id="result-phase" class="result-phase" style="display: none;">
+        <div class="victory-banner">
+            <div class="banner-bg"></div>
+            <div class="trophy-animation">
+                <div class="trophy">🏆</div>
+                <div class="trophy-glow"></div>
+            </div>
+            <div class="winner-announcement">
+                <div class="winner-label">VICTOIRE</div>
+                <div id="winner-name" class="winner-name"></div>
+                <div id="winner-class" class="winner-class"></div>
+            </div>
+        </div>
+
+        <div class="battle-summary">
+            <div class="summary-card">
+                <div class="summary-icon">⚔️</div>
+                <div class="summary-value" id="total-rounds"></div>
+                <div class="summary-label">Tours de combat</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon">❤️</div>
+                <div class="summary-value" id="remaining-hp"></div>
+                <div class="summary-label">HP restants</div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon">💀</div>
+                <div class="summary-value" id="loser-name"></div>
+                <div class="summary-label">Vaincu</div>
+            </div>
+        </div>
+
+        <button id="new-battle" class="btn-rematch">
+            <span class="btn-icon">🔄</span>
+            <span class="btn-text">NOUVEAU COMBAT</span>
+        </button>
+    </div>
+</div>
+
+<script>
+let fighter1Data = null;
+let fighter2Data = null;
+let battleLog = [];
+let currentRound = 0;
+
+// Template de carte de combattant
+function createFighterCard(data, side) {
+    const sideClass = side === 1 ? 'card-left' : 'card-right';
+    const imageHtml = data.image 
+        ? `<img src="${data.image}" alt="${data.name}" class="card-avatar">`
+        : `<div class="card-avatar-placeholder"><span class="avatar-icon">⚔️</span></div>`;
+
+    return `
+        <div class="fighter-card-content ${sideClass}">
+            <div class="card-avatar-container">
+                ${imageHtml}
+                <div class="level-badge">NIV ${data.level}</div>
+            </div>
+            <div class="card-info">
+                <div class="card-name">${data.name}</div>
+                <div class="card-class class-${data.class}">${data.class.toUpperCase()}</div>
+                <div class="card-stats">
+                    <div class="stat-row">
+                        <span class="stat-icon">❤️</span>
+                        <span class="stat-bar">
+                            <span class="stat-fill" style="width: ${(data.hp / 500) * 100}%"></span>
+                        </span>
+                        <span class="stat-value">${data.hp}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-icon">⚔️</span>
+                        <span class="stat-bar">
+                            <span class="stat-fill" style="width: ${(data.attack / 100) * 100}%"></span>
+                        </span>
+                        <span class="stat-value">${data.attack}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-icon">🛡️</span>
+                        <span class="stat-bar">
+                            <span class="stat-fill" style="width: ${(data.defense / 50) * 100}%"></span>
+                        </span>
+                        <span class="stat-value">${data.defense}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-icon">⚡</span>
+                        <span class="stat-bar">
+                            <span class="stat-fill" style="width: ${(data.speed / 100) * 100}%"></span>
+                        </span>
+                        <span class="stat-value">${data.speed}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// Mise à jour de la prévisualisation
+function updateFighterPreview(fighterId, selectElement) {
+    const cardDiv = document.getElementById(`${fighterId}-card`);
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    
+    if (!selectedOption.value) {
+        cardDiv.innerHTML = '';
+        cardDiv.classList.remove('active');
+        return;
+    }
+
+    const data = {
+        name: selectedOption.dataset.name,
+        class: selectedOption.dataset.class,
+        level: selectedOption.dataset.level,
+        hp: selectedOption.dataset.hp,
+        attack: selectedOption.dataset.attack,
+        defense: selectedOption.dataset.defense,
+        speed: selectedOption.dataset.speed,
+        image: selectedOption.dataset.image
+    };
+
+    const side = fighterId === 'fighter1' ? 1 : 2;
+    
+    if (side === 1) fighter1Data = data;
+    else fighter2Data = data;
+
+    cardDiv.innerHTML = createFighterCard(data, side);
+    cardDiv.classList.add('active');
+    
+    checkBattleReady();
+}
+
+// Vérifier si le combat peut démarrer
+function checkBattleReady() {
+    const fighter1Select = document.getElementById('fighter1');
+    const fighter2Select = document.getElementById('fighter2');
+    const startButton = document.getElementById('start-battle');
+    
+    const ready = fighter1Select.value && fighter2Select.value && 
+                  fighter1Select.value !== fighter2Select.value;
+    
+    startButton.disabled = !ready;
+    
+    if (ready) {
+        startButton.classList.add('ready');
+    } else {
+        startButton.classList.remove('ready');
+    }
+    
+    if (fighter1Select.value === fighter2Select.value && fighter1Select.value) {
+        alert('⚠️ Un guerrier ne peut pas combattre contre lui-même !');
+        fighter2Select.value = '';
+        updateFighterPreview('fighter2', fighter2Select);
+    }
+}
+
+// Lancer le combat
+async function startBattle() {
+    const fighter1Id = document.getElementById('fighter1').value;
+    const fighter2Id = document.getElementById('fighter2').value;
+    
+    if (!fighter1Id || !fighter2Id) return;
+
+    // Masquer la phase de sélection
+    document.getElementById('selection-phase').style.display = 'none';
+    document.getElementById('battle-phase').style.display = 'block';
+    
+    // Initialiser l'affichage du combat
+    document.getElementById('fighter1-name-battle').textContent = fighter1Data.name;
+    document.getElementById('fighter2-name-battle').textContent = fighter2Data.name;
+
+    try {
+        const response = await fetch('/characters/battle', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                character1_id: parseInt(fighter1Id),
+                character2_id: parseInt(fighter2Id)
+            })
+        });
+
+        if (!response.ok) throw new Error('Erreur lors du combat');
+
+        const result = await response.json();
+        await animateBattle(result);
+    } catch (error) {
+        alert('❌ Erreur lors du combat : ' + error.message);
+        resetBattle();
+    }
+}
+
+// Animation du combat
+async function animateBattle(result) {
+    battleLog = result.battle_log;
+    currentRound = 0;
+    
+    const logContainer = document.getElementById('combat-log');
+    logContainer.innerHTML = '';
+    
+    let fighter1HP = parseInt(fighter1Data.hp);
+    let fighter2HP = parseInt(fighter2Data.hp);
+    
+    // Animer chaque round
+    for (let i = 0; i < result.turns; i++) {
+        currentRound = i + 1;
+        document.getElementById('current-round').textContent = currentRound;
+        
+        await new Promise(resolve => setTimeout(resolve, 800));
+        
+        // Log de l'attaque
+        if (i * 2 + 2 < battleLog.length) {
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.textContent = battleLog[i * 2 + 2];
+            logContainer.appendChild(logEntry);
+            logContainer.scrollTop = logContainer.scrollHeight;
+            
+            // Animation d'attaque
+            const isF1Attacking = battleLog[i * 2 + 2].includes(fighter1Data.name);
+            await animateAttack(isF1Attacking ? 1 : 2);
+            
+            // Mise à jour des HP (estimation basée sur le nombre de rounds)
+            const hpLossPerRound = isF1Attacking 
+                ? Math.floor(fighter2HP / (result.turns - i))
+                : Math.floor(fighter1HP / (result.turns - i));
+            
+            if (isF1Attacking) {
+                fighter2HP = Math.max(0, fighter2HP - hpLossPerRound);
+                updateHPBar(2, fighter2HP, parseInt(fighter2Data.hp));
+            } else {
+                fighter1HP = Math.max(0, fighter1HP - hpLossPerRound);
+                updateHPBar(1, fighter1HP, parseInt(fighter1Data.hp));
+            }
+        }
+    }
+    
+    // Afficher le résultat
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    showResult(result);
+}
+
+// Animation d'attaque
+async function animateAttack(attacker) {
+    const sprite = document.getElementById(`sprite${attacker}`);
+    const target = attacker === 1 ? 2 : 1;
+    const damage = document.getElementById(`damage${target}`);
+    const impact = document.getElementById('impact');
+    
+    // Mouvement d'attaque
+    sprite.classList.add('attacking');
+    
+    await new Promise(resolve => setTimeout(resolve, 300));
+    
+    // Impact
+    impact.classList.add('active');
+    damage.textContent = '-' + Math.floor(Math.random() * 30 + 10);
+    damage.classList.add('show');
+    
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    sprite.classList.remove('attacking');
+    impact.classList.remove('active');
+    damage.classList.remove('show');
+}
+
+// Mise à jour de la barre de HP
+function updateHPBar(fighter, currentHP, maxHP) {
+    const percentage = Math.max(0, (currentHP / maxHP) * 100);
+    const fill = document.getElementById(`fighter${fighter}-hp-fill`);
+    const text = document.getElementById(`fighter${fighter}-hp-text`);
+    
+    fill.style.width = percentage + '%';
+    text.textContent = currentHP + ' HP';
+    
+    if (percentage < 30) {
+        fill.style.background = 'linear-gradient(90deg, #dc3545, #c82333)';
+    } else if (percentage < 60) {
+        fill.style.background = 'linear-gradient(90deg, #ffc107, #ff9800)';
+    }
+}
+
+// Afficher le résultat
+function showResult(result) {
+    document.getElementById('battle-phase').style.display = 'none';
+    document.getElementById('result-phase').style.display = 'block';
+    
+    document.getElementById('winner-name').textContent = result.winner_name;
+    document.getElementById('winner-class').textContent = result.winner_id === parseInt(document.getElementById('fighter1').value) 
+        ? fighter1Data.class.toUpperCase() 
+        : fighter2Data.class.toUpperCase();
+    document.getElementById('total-rounds').textContent = result.turns;
+    document.getElementById('remaining-hp').textContent = result.winner_remaining_hp;
+    document.getElementById('loser-name').textContent = result.loser_name;
+}
+
+// Réinitialiser
+function resetBattle() {
+    document.getElementById('selection-phase').style.display = 'flex';
+    document.getElementById('battle-phase').style.display = 'none';
+    document.getElementById('result-phase').style.display = 'none';
+    
+    document.getElementById('fighter1').value = '';
+    document.getElementById('fighter2').value = '';
+    document.getElementById('fighter1-card').innerHTML = '';
+    document.getElementById('fighter2-card').innerHTML = '';
+    document.getElementById('fighter1-card').classList.remove('active');
+    document.getElementById('fighter2-card').classList.remove('active');
+    
+    fighter1Data = null;
+    fighter2Data = null;
+    
+    checkBattleReady();
+}
+
+// Event listeners
+document.getElementById('fighter1').addEventListener('change', function() {
+    updateFighterPreview('fighter1', this);
+});
+
+document.getElementById('fighter2').addEventListener('change', function() {
+    updateFighterPreview('fighter2', this);
+});
+
+document.getElementById('start-battle').addEventListener('click', startBattle);
+document.getElementById('new-battle').addEventListener('click', resetBattle);
+</script>
+{% endblock %}
