@@ -16,6 +16,10 @@ COPY . .
 # Créer le dossier pour la base de données
 RUN mkdir -p databases
 
+# ==================== IMPORTANT ====================
+# Définir PYTHONPATH pour que Python trouve le module 'app'
+ENV PYTHONPATH=/app
+
 # Exposer le port 8000
 EXPOSE 8000
 

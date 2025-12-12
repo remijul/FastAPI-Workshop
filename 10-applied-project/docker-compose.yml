@@ -9,12 +9,29 @@ services:
     volumes:
       # Persister la base de données
       - ./databases:/app/databases
-      # Monter le code en développement (optionnel)
-      # - .:/app
+      # Monter le code en développement (optionnel - décommenter pour hot reload)
+      - .:/app
     environment:
       - DATABASE_PATH=/app/databases/characters.db
+      - PYTHONPATH=/app
       - DEBUG=True
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     restart: unless-stopped
+
+  # ==================== SERVICE TEST ====================
+  test:
+    build: .
+    container_name: characters_test
+    volumes:
+      - .:/app
+    working_dir: /app
+    environment:
+      - DATABASE_PATH=/app/databases/test_characters.db
+      - PYTHONPATH=/app
+    command: /bin/sh -c "export PYTHONPATH=/app && pytest tests/ -v --tb=short"
+    #command: pytest tests/ -v --tb=short
+    depends_on:
+      - api
 
   # Service optionnel : Interface web pour visualiser la base SQLite
   adminer:
@@ -30,3 +47,9 @@ services:
 # 1. Ouvrir http://localhost:8080
 # 2. Système: SQLite 3
 # 3. Base de données: /app/databases/characters.db (copier le fichier dans le conteneur adminer)
+
+# Commandes utiles:
+# - Lancer l'API : docker-compose up api
+# - Lancer les tests : docker-compose run --rm test
+# - Rebuild : docker-compose build --no-cache
+# - Logs API : docker-compose logs -f api
